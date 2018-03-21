@@ -15,7 +15,5 @@
     state: started
   register: status
 
-- debug: msg={{ status }}
-
 - name: copy info.php file under /var/www/html
   copy: src=info.php dest=/var/www/html/info.php
