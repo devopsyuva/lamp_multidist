@@ -20,7 +20,9 @@
   shell: firewall-cmd --reload
 
 - name: check php info pacge using curl
-  command: curl localhost/info.php
+  command: curl -I localhost/info.php
   register: curl_output
 
-- debug: msg={{ curl_output }}
+- name: check the site status on RedHat machine
+  debug: msg="Success on RedHat machines"
+  when: curl_output.stdout.find("200 OK") != -1
