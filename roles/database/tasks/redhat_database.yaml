@@ -1,0 +1,12 @@
+---
+- name: Install mariadb package on CentOS servers
+  yum: name={{ item }} state=present
+  with_items:
+    - mariadb-server
+    - mariadb
+
+- name: start mariadb service
+  service:
+    name: mariadb
+    state: started
+    enabled: yes

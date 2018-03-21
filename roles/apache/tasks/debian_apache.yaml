@@ -1,0 +1,21 @@
+---
+- name: update and install apache package
+  apt:
+    name: apache2
+    state: present
+    update_cache: yes
+
+- name: update apache2.conf file with ServerName
+  template: src=apache2.conf.j2 dest=/etc/apache2/apache2.conf
+  notify: restart apache2 service
+
+- name: check apache2 status
+  service:
+    name: apache2
+    state: started
+  register: status
+
+- debug: msg={{ status }}
+
+- name: copy info.php file under /var/www/html
+  copy: src=info.php dest=/var/www/html/info.php

@@ -1,6 +1,6 @@
 ---
 - hosts: all
   roles:
-    - { role: ../roles/apache, when: ansible_os_family == 'Debian' }
-    - { role: ../roles/database, when: ansible_os_family == 'Debian' }
-    - { role: ../roles/php, when: ansible_os_family == 'Debian' }
+    - ../roles/apache
+    - ../roles/database
+    - ../roles/php

@@ -1,0 +1,26 @@
+---
+- name: Install php packages
+  yum: name={{ item }} state=present
+  with_items:
+    - php
+    - php-mysql
+    - php-fpm
+
+- name: copy info.php file
+  copy: src=info.php dest=/var/www/html/info.php
+  notify: restart httpd service
+
+- name: add the firewall for webserver
+  shell: firewall-cmd --permanent --zone=public --add-service={{ item }}
+  with_items:
+    - http
+    - https
+
+- name: reload firewalld
+  shell: firewall-cmd --reload
+
+- name: check php info pacge using curl
+  command: curl localhost/info.php
+  register: curl_output
+
+- debug: msg={{ curl_output }}

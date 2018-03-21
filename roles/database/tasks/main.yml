@@ -1,15 +1,7 @@
 ---
 # tasks file for roles/database
-- name: set root password for mysql server before installing
-  debconf: name='mysql-server'
-           question='mysql-server/{{ item }}'
-           value='{{ mysql_root_password }}'
-           vtype='password'
-  with_items:
-    - root_password
-    - root_password_again
+- import_tasks: debian_database.yaml
+  when: ansible_os_family == 'Debian'
 
-- name: Install mysql-server package
-  apt:
-    name: mysql-server
-    state: present
+- import_tasks: redhat_database.yaml
+  when: ansible_os_family == 'RedHat'

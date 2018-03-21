@@ -1,0 +1,14 @@
+---
+- name: set root password for mysql server before installing
+  debconf: name='mysql-server'
+           question='mysql-server/{{ item }}'
+           value='{{ mysql_root_password }}'
+           vtype='password'
+  with_items:
+    - root_password
+    - root_password_again
+
+- name: Install mysql-server package
+  apt:
+    name: mysql-server
+    state: present

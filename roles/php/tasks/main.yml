@@ -1,10 +1,7 @@
 ---
 # tasks file for roles/php
-- name: Install PHP packages
-  apt: name={{ item }} state=present
-  with_items:
-    - [ php, libapache2-mod-php, php-mcrypt, php-mysql ]
+- import_tasks: debian_php.yaml
+  when: ansible_os_family == 'Debian'
 
-- name: copy dir.conf with new details
-  copy: src=dir.conf dest=/etc/apache2/mods-enabled/dir.conf
-  notify: restart apache2 service
+- import_tasks: redhat_php.yaml
+  when: ansible_os_family == 'RedHat'
